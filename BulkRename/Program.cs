@@ -20,13 +20,13 @@ namespace BulkRename
         private static void RunMain(BulkRenameParameter opt)
         {
             // list files
-            string[] originalFiles = GetFiles(opt.SourceDir, opt.FilePattern);
+            var originalFiles = GetFiles(opt.SourceDir, opt.FilePattern);
 
             // sort files
-            string[] sortedFiles = SortFiles(originalFiles, opt.SortByNumber);
+            var sortedFiles = SortFiles(originalFiles, opt.SortByNumber);
 
             // assign new name
-            string[] renameFiles = AssignFileName(sortedFiles, opt.Prefix, opt.UseOriginalName, opt.AddSequence);
+            var renameFiles = AssignFileName(sortedFiles, opt.Prefix, opt.UseOriginalName, opt.AddSequence);
 
             // review new file name
             ReviewRename(sortedFiles, renameFiles);
@@ -45,7 +45,7 @@ namespace BulkRename
 
         private static string[] SortFiles(string[] files, bool sortByNumber)
         {
-            List<string> sorted = new List<string>();
+            var sorted = new List<string>();
             if (sortByNumber)
             {
                 return SortFilesByNumber(files);
@@ -60,9 +60,9 @@ namespace BulkRename
 
         private static string[] SortFilesByNumber(string[] files)
         {
-            Regex matchNumber = new Regex("[0-9]+");
+            var matchNumber = new Regex("[0-9]+");
 
-            List<Tuple<int, string>> tuples = new List<Tuple<int, string>>();
+            var tuples = new List<Tuple<int, string>>();
             foreach (var filename in files)
             {
                 string filenumber = Path.GetFileNameWithoutExtension(filename);
@@ -84,12 +84,12 @@ namespace BulkRename
 
         private static string[] AssignFileName(string[] files, string prefix, bool useOrigin, bool useSequence)
         {
-            int count = files.Length;
-            string sequenceFormat = "{0:D" + (count.ToString().Length).ToString() + "}";
+            var count = files.Length;
+            var sequenceFormat = "{0:D" + (count.ToString().Length).ToString() + "}";
 
-            List<string> newFiles = new List<string>();
+            var newFiles = new List<string>();
 
-            int index = 0;
+            var index = 0;
             foreach (var oldfile in files)
             {
                 index++;
@@ -121,7 +121,7 @@ namespace BulkRename
             if (oldname.Length != newname.Length)
                 throw new InvalidOperationException();
 
-            for (int ii = 0; ii < oldname.Length; ii++)
+            for (var ii = 0; ii < oldname.Length; ii++)
             {
                 Console.WriteLine($"rename [{oldname[ii]}] -> [{newname[ii]}]");
             }
@@ -129,7 +129,7 @@ namespace BulkRename
 
         private static void BulkRename(string[] oldname, string[] newname)
         {
-            for (int ii = 0; ii < oldname.Length; ii++)
+            for (var ii = 0; ii < oldname.Length; ii++)
             {
                 string dir = Path.GetDirectoryName(oldname[ii]);
                 File.Move(oldname[ii], dir + Path.DirectorySeparatorChar + newname[ii]);
