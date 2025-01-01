@@ -18,7 +18,7 @@ namespace BulkRename
         [CommandLine.Option("origin", Default = false, HelpText = "Determine if original file name should be included in the renamed file")]
         public bool UseOriginalName { get; set; }
 
-        [CommandLine.Option("suffix", Default = false, HelpText = "Determine if sequencial number is add at the end of renamed file")]
+        [CommandLine.Option("suffix", Default = false, HelpText = "Determine if sequential number is added at the end of renamed file")]
         public bool AddSequence { get; set; }
     }
 }
